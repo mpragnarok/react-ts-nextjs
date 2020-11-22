@@ -36,6 +36,13 @@ class Users extends Component {
         this.page--;
         await this.componentDidMount();
     };
+
+    delete = async (id: number) => {
+        if (window.confirm("Are you sure you want to delete this record?")) {
+            await axios.delete(`/users/${id}`);
+            this.setState({ users: this.state.users.filter((u: User) => u.id !== id) });
+        }
+    };
     render() {
         return (
             <Wrapper>
@@ -68,12 +75,13 @@ class Users extends Component {
                                         <td>{user.role.name}</td>
                                         <td>
                                             <div className="btn-group mr-2">
-                                                <a href="/#" className="btn btn-sm btn-outline-secondary">
-                                                    Edit
-                                                </a>
-                                                <a href="/#" className="btn btn-sm btn-outline-secondary">
+                                                <button className="btn btn-sm btn-outline-secondary">Edit</button>
+                                                <button
+                                                    className="btn btn-sm btn-outline-secondary"
+                                                    onClick={() => this.delete(user.id)}
+                                                >
                                                     Delete
-                                                </a>
+                                                </button>
                                             </div>
                                         </td>
                                     </tr>
