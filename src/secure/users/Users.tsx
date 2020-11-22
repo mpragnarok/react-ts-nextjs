@@ -75,7 +75,12 @@ class Users extends Component {
                                         <td>{user.role.name}</td>
                                         <td>
                                             <div className="btn-group mr-2">
-                                                <button className="btn btn-sm btn-outline-secondary">Edit</button>
+                                                <Link
+                                                    to={`/users/${user.id}/edit`}
+                                                    className="btn btn-sm btn-outline-secondary"
+                                                >
+                                                    Edit
+                                                </Link>
                                                 <button
                                                     className="btn btn-sm btn-outline-secondary"
                                                     onClick={() => this.delete(user.id)}

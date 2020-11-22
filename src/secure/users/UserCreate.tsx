@@ -1,6 +1,5 @@
 import React, { Component, SyntheticEvent } from "react";
 import Wrapper from "../Wrapper";
-
 import { Role } from "../../classes/role";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
