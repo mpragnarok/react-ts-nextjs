@@ -19,6 +19,14 @@ class Users extends Component {
         return (
             <Wrapper>
                 <h2>Section title</h2>
+                <div className="btn-toolbar mb-2 mb-md-0">
+                    <button
+                        type="button"
+                        className="btn btn-sm btn-outline-secondary  mb-3"
+                    >
+                        Add
+                    </button>
+                </div>
                 <div className="table-responsive">
                     <table className="table table-striped table-sm">
                         <thead>
@@ -39,8 +47,23 @@ class Users extends Component {
                                             {user.first_name} {user.last_name}
                                         </td>
                                         <td>{user.email}</td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{user.role.name}</td>
+                                        <td>
+                                            <div className="btn-group mr-2">
+                                                <a
+                                                    href="/#"
+                                                    className="btn btn-sm btn-outline-secondary"
+                                                >
+                                                    Edit
+                                                </a>
+                                                <a
+                                                    href="/#"
+                                                    className="btn btn-sm btn-outline-secondary"
+                                                >
+                                                    Delete
+                                                </a>
+                                            </div>
+                                        </td>
                                     </tr>
                                 );
                             })}
