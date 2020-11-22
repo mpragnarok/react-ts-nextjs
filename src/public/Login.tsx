@@ -18,6 +18,9 @@ class Login extends Component {
         });
         // ! save the token in localStorage is not safe
         localStorage.setItem("token", res.data.token);
+        axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
+            "token"
+        )}`;
         // TODO: save it in cookie or redux instead
         console.log(res);
 

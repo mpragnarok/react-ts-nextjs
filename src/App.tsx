@@ -1,9 +1,9 @@
 import React from "react";
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
 
-import Dashboard from "./secure/Dashboard";
-import Users from "./secure/Users";
+import Dashboard from "./secure/dashboard/Dashboard";
+import Users from "./secure/users/Users";
 import Login from "./public/Login";
 import { BrowserRouter, Route } from "react-router-dom";
 import Register from "./public/Register";
