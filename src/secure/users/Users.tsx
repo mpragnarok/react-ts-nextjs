@@ -8,23 +8,40 @@ class Users extends Component {
     state = {
         users: [],
     };
+
+    page = 1;
+    last_page = 0;
+
     componentDidMount = async () => {
-        const res = await axios.get("/users");
+        const res = await axios.get(`/users?page=${this.page}`);
         // ! Have to check if the res.data is existed
         if (res.data) {
             this.setState({ users: res.data.data });
+            this.last_page = res.data.meta.last_page;
         }
-        console.log(res);
+    };
+
+    next = async () => {
+        if (this.page === this.last_page) {
+            return;
+        }
+        this.page++;
+
+        await this.componentDidMount();
+    };
+
+    prev = async () => {
+        if (this.page === 1) return;
+
+        this.page--;
+        await this.componentDidMount();
     };
     render() {
         return (
             <Wrapper>
                 <h2>Section title</h2>
                 <div className="btn-toolbar mb-2 mb-md-0">
-                    <Link
-                        to={"/users/create"}
-                        className="btn btn-sm btn-outline-secondary  mb-3"
-                    >
+                    <Link to={"/users/create"} className="btn btn-sm btn-outline-secondary  mb-3">
                         Add
                     </Link>
                 </div>
@@ -51,16 +68,10 @@ class Users extends Component {
                                         <td>{user.role.name}</td>
                                         <td>
                                             <div className="btn-group mr-2">
-                                                <a
-                                                    href="/#"
-                                                    className="btn btn-sm btn-outline-secondary"
-                                                >
+                                                <a href="/#" className="btn btn-sm btn-outline-secondary">
                                                     Edit
                                                 </a>
-                                                <a
-                                                    href="/#"
-                                                    className="btn btn-sm btn-outline-secondary"
-                                                >
+                                                <a href="/#" className="btn btn-sm btn-outline-secondary">
                                                     Delete
                                                 </a>
                                             </div>
@@ -71,6 +82,21 @@ class Users extends Component {
                         </tbody>
                     </table>
                 </div>
+
+                <nav aria-label="Page navigation example">
+                    <ul className="pagination">
+                        <li className="page-item">
+                            <button className="page-link" onClick={this.prev}>
+                                Previous
+                            </button>
+                        </li>
+                        <li className="page-item">
+                            <button className="page-link" onClick={this.next}>
+                                Next
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
             </Wrapper>
         );
     }
