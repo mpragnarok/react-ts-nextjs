@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Wrapper from "../Wrapper";
 import axios from "axios";
 import { User } from "../../classes/user";
+import { Link } from "react-router-dom";
 
 class Users extends Component {
     state = {
@@ -20,12 +21,12 @@ class Users extends Component {
             <Wrapper>
                 <h2>Section title</h2>
                 <div className="btn-toolbar mb-2 mb-md-0">
-                    <button
-                        type="button"
+                    <Link
+                        to={"/users/create"}
                         className="btn btn-sm btn-outline-secondary  mb-3"
                     >
                         Add
-                    </button>
+                    </Link>
                 </div>
                 <div className="table-responsive">
                     <table className="table table-striped table-sm">
@@ -41,7 +42,7 @@ class Users extends Component {
                         <tbody>
                             {this.state.users.map((user: User) => {
                                 return (
-                                    <tr>
+                                    <tr key={user.id}>
                                         <td>{user.id}</td>
                                         <td>
                                             {user.first_name} {user.last_name}
