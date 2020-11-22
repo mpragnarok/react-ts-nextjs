@@ -1,10 +1,35 @@
-import React, { Component } from "react";
+import React, { Component, SyntheticEvent } from "react";
+import axios from "axios";
 import "./Public.css";
+import { Redirect } from "react-router-dom";
 
 class Login extends Component {
+    email = "";
+    password = "";
+    state = {
+        redirect: false,
+    };
+    submit = async (e: SyntheticEvent) => {
+        e.preventDefault();
+
+        const res = await axios.post("/login", {
+            email: this.email,
+            password: this.password,
+        });
+        // ! save the token in localStorage is not safe
+        localStorage.setItem("token", res.data.token);
+        // TODO: save it in cookie or redux instead
+        console.log(res);
+
+        this.setState({ redirect: true });
+    };
+
     render() {
+        if (this.state.redirect) {
+            return <Redirect to={"/"} />;
+        }
         return (
-            <form className="form-signin">
+            <form className="form-signin" onSubmit={this.submit}>
                 <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
                 <label htmlFor="inputEmail" className="sr-only">
                     Email address
@@ -15,7 +40,7 @@ class Login extends Component {
                     className="form-control"
                     placeholder="Email address"
                     required
-                    autoFocus
+                    onChange={(e) => (this.email = e.target.value)}
                 />
                 <label htmlFor="inputPassword" className="sr-only">
                     Password
@@ -26,6 +51,7 @@ class Login extends Component {
                     className="form-control"
                     placeholder="Password"
                     required
+                    onChange={(e) => (this.password = e.target.value)}
                 />
 
                 <button
